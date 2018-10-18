@@ -1,6 +1,7 @@
 package com.ljx.springboot;
 
 import com.ljx.springboot.config.SpringBootConfigWithComponentScan;
+import com.ljx.springboot.pojo.DataSource;
 import com.ljx.springboot.pojo.Dog;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -15,8 +16,9 @@ public class Test {
         Dog dog = ac.getBean(Dog.class);
         dog.service();
 
-        boolean indexController = ac.containsBean("indexController");
-        System.out.println(indexController);
+        DataSource ds = ac.getBean(DataSource.class);
+        ds.pringUsername();
+
 //
 //        Dog dog1 = (Dog)ac.getBean("dog");
 //        dog1.service();
