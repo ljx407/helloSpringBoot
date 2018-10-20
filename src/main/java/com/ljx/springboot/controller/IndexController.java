@@ -26,4 +26,6 @@ public class IndexController {
         view.setViewName("welcome");
         return view;
     }
+
+
 }

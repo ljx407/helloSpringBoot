@@ -1,7 +1,8 @@
 package com.ljx.springboot.config;
 
-import com.ljx.springboot.pojo.impl.Cat;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * @Auther: jasonliu
@@ -10,9 +11,9 @@ import org.springframework.context.annotation.*;
  */
 @Configuration
 @ComponentScan(
-        basePackages = {"com.ljx.springboot.pojo"},
-//        lazyInit = false
-        excludeFilters = {@ComponentScan.Filter(value = {Cat.class}, type = FilterType.ASSIGNABLE_TYPE)}
+//        lazyInit = false,
+//        excludeFilters = {@ComponentScan.Filter(value = {Cat.class}, type = FilterType.ASSIGNABLE_TYPE)},
+        basePackages = {"com.ljx.springboot.pojo"}
 )
 @PropertySource({"classpath:datasource.properties"})
 public class SpringBootConfigWithComponentScan {
