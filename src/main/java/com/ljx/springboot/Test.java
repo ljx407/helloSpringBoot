@@ -1,11 +1,12 @@
 package com.ljx.springboot;
 
+import com.ljx.springboot.config.DatabaseConfig;
 import com.ljx.springboot.config.SpringBootConfigWithComponentScan;
-import com.ljx.springboot.pojo.DataSource;
+import com.ljx.springboot.config.TestConfig;
 import com.ljx.springboot.pojo.Dog;
-import com.ljx.springboot.pojo.Person;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.sql.DataSource;
 import java.sql.*;
 
 /**
@@ -15,12 +16,12 @@ import java.sql.*;
  */
 public class Test {
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(SpringBootConfigWithComponentScan.class);
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(SpringBootConfigWithComponentScan.class, DatabaseConfig.class);
         Dog dog = ac.getBean(Dog.class);
         dog.service();
 
-        DataSource ds = ac.getBean(DataSource.class);
-        ds.pringUsername();
+//        DataSource ds = ac.getBean(DataSource.class);
+//        ds.pringUsername();
 
 //
 //        Dog dog1 = (Dog)ac.getBean("dog");
@@ -29,11 +30,35 @@ public class Test {
 //        Dog dog2 = ac.getBean("dog", Dog.class);
 //        dog2.service();
 
-        Person person = ac.getBean(Person.class);
-        person.service();
+//        Person person = ac.getBean(Person.class);
+//        person.service();
+
+//        testDatasource(ac);
+
+        TestConfig bean = ac.getBean(TestConfig.class);
+        System.out.println(bean.getPwd());
 
 
+    }
 
+    private static void testDatasource(AnnotationConfigApplicationContext ac) {
+        DatabaseConfig config = ac.getBean(DatabaseConfig.class);
+        System.out.println(config.getUrl());
+
+        DataSource dataSource = ac.getBean("dataSourceA",DataSource.class);
+        try (Connection connection = dataSource.getConnection()) {
+
+            String sql = "select count(*) AS num from student";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int num = resultSet.getInt("num");
+                System.out.println(num);
+            }
+
+        } catch (Exception e) {
+
+        }
     }
 
     /**
@@ -56,7 +81,7 @@ public class Test {
         String password = "root";
 
 
-        try(Connection connection = DriverManager.getConnection(url, user, password)) {
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
 
             String sql = "select count(*) AS num from people";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
