@@ -2,6 +2,7 @@ package com.ljx.springboot.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.annotation.Order;
 
 /**
  * @Auther: jasonliu
@@ -9,9 +10,10 @@ import org.aspectj.lang.annotation.*;
  * @Description:
  */
 @Aspect
+@Order(1)
 public class MyAspect {
 
-    @Pointcut("execution(* com..*.UserServiceImpl.printUser(..))")
+    @Pointcut("execution(* com..*.printUser(..))")
     public void pointCut() {
 
     }

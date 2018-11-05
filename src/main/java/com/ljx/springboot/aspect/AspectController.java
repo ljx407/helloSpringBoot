@@ -17,11 +17,20 @@ public class AspectController {
     @Autowired
     private UserService userServiceImpl;
 
+    @Autowired
+    private AnotherUserService anotherUserService ;
+
     @RequestMapping("/getUser")
     @ResponseBody
     public User getUser(User user) {
-
         userServiceImpl.printUser(user);
+        return user ;
+    }
+
+    @RequestMapping("/getAnotherUser")
+    @ResponseBody
+    public User getAnotherUser(User user) {
+        anotherUserService.printAnotherUser(user);
         return user ;
     }
 }
