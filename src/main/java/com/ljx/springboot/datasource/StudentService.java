@@ -8,5 +8,4 @@ public interface StudentService {
     int updateStudent(Student s);
     List<Student> findAll();
     Student findById(int id);
-
 }
